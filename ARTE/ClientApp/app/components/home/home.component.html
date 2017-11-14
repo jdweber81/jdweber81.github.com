@@ -1,0 +1,44 @@
+<span style="background-color: #FFFF00">{{errorMessage}}</span>
+
+<p style="text-align:center;"><img src="http://onsitesolutionspt.com/wp-content/themes/on-site-solutions/img/on-site-solutions-logo.svg" alt="Onsite Solutions PT" style="width:304px;height:228px;"></p>
+<h2 align="center"><b>A.I. Office Ergonomic Assessment</b></h2>
+<p align="center">powered by <b><a href="https://onsitesolutionspt.weebly.com/arte.html" target="_blank">A.R.T.E.</a></b></p>
+<h3 align="center">Visual recognition A.I. programmed, developed and trained by Physical Therapists</h3>
+<hr />
+<p align="left">Directions for use:</p>
+<p align="left">1) Click <b>Choose</b> to upload an image file (.jpeg format)</p>
+<p align="left">2) Click <b>Start Assessment</b></p>
+<p align="left">3) Assessment results and ergonomic suggestions will return below your uploaded image.</p>
+
+<p-fileUpload name="myfile[]"
+              url="api/upload"
+              multiple="false"
+              accept="image/*"
+              maxFileSize="10000000"
+              uploadLabel="Start Assessment"
+              (onSelect)="onSelect($event)"
+              (onUpload)="onUpload($event)">
+    <ng-template pTemplate type="content">
+        <div *ngIf="(showPredictedImage)">
+            <img [src]="PredictedImage" *ngIf="(PredictedImage != '')" [width]="600" />
+            <h3>ERGONOMIC ASSESSMENT RESULTS</h3>
+            <p>After carefully assessing the uploaded workspace setup, your results are listed below:</p>
+
+            <p-dataTable var="table" [value]="this.CustomVisionResponse.predictions">
+                <p-column field="tag" header="Ergonomic Assessment Findings"></p-column>
+                
+                <p-column field="link" header="Your Ergonomic Education">
+                    <ng-template let-col let-data="rowData" pTemplate="body">
+                        <span><a href="{{data.link}}" target="_blank" style="color: blue;">Your Customized Education For This Ergonomic Area</a></span>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+            <h3>READING YOUR RESULTS from A.R.T.E.:</h3>
+            <p>-Based on the uploaded image, A.R.T.E. chose your specific assessment findings (listed above).  A.R.T.E. also provided you a link, with specific ergonomic opportunities, advice and education which are tailored to your specific ergonomic needs.</p>
+        </div>
+    </ng-template>
+</p-fileUpload>
+
+<p align="left">Having trouble with A.R.T.E.? See our <b><a href="https://onsitesolutionspt.weebly.com/faqs.html" target="_blank">Troubleshooting FAQs</a></b></p>
+
+<div hidden><p-column field="probability" header="Probability This is True"></p-column></div>
